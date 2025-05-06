@@ -7,14 +7,15 @@
 #' here::here("data-raw/dime/sleep/101.csv") |>
 #'   import_sleep()
 import_dime <- function(file_path) {
-  csv_file <- file_path |>
-    readr::read_csv(
-      show_col_types = FALSE,
-      name_repair = snakecase::to_snake_case,
-      n_max = 100
-    )
-  return(csv_file)
+  if (grepl("\\.csv$", tolower(file_path))) {
+    csv_file <- file_path |>
+      readr::read_csv(
+        show_col_types = FALSE,
+        name_repair = snakecase::to_snake_case,
+        n_max = 100
+      )
+    return(csv_file)
+  } else {
+    stop("File is not a CSV file.")
+  }
 }
-
-here::here("data-raw/dime/sleep/101.csv") |>
-  import_dime()

@@ -137,6 +137,7 @@ here::here("data-raw/dime/sleep/101.csv") |>
 
 ## Making functions robust
 ```{r}
+# add pak::func and add usethis::use_package("snakecase")
 ```
 
 ## Import DIME data function
@@ -147,11 +148,25 @@ here::here("data-raw/dime/sleep/101.csv") |>
 
 
 
-## S3 
+## S3 classes and S3 methods
 ```{r}
 num <- 1000000000
 print(num)
 
 class(num) <- c("POSIXct", "POSIXt")
 print(num)
+
+class(num) <- c("daniel_mazhariJensen")
+
+print.daniel_mazhariJensen <- function(x) {
+  cat("This is Daniel's work:", x, "\n")
+}
+
+print(num)
+
+getS3method("print", "daniel_mazhariJensen")
+getS3method("print", "numeric_version")
+getS3method("print", "POSIXct")
+getS3method("print", "factor")
+getS3method("print", "data.frame")
 ```
