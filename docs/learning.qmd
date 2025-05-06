@@ -38,3 +38,37 @@ sleep_101 <- here::here("data-raw/dime/sleep/101.csv") |>
   )
 sleep_101
 ```
+
+```{r}
+sleep_101 |>
+  ggplot(aes(x = date, y = sleep_type)) +
+  geom_point()
+
+#
+sleep_101 |>
+  filter(date < "2021-05-24 23:03:00 UTC")
+  ggplot(aes(x = date, y = sleep_type)) +
+  geom_step(aes(group = 1)) +
+  geom_line(aes(x = date, y = sleep_type, colour = sleep_type)) +
+  labs(title = "Subject 1", x = "Time (POSIXct)", y = "Sleep State") #+
+# theme_clean()
+```
+
+## Making a function that adds numbers
+
+```{r}
+#' Add two nubers together
+#'
+#' @param num1 A number
+#' @param num2 A number
+#'
+#' @returns Returns the sum of the numbers
+#'
+#' @examples add_numbers(100, 1)
+add_numbers <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
+
+add_numbers(100,1)
+```
