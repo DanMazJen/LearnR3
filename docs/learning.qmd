@@ -46,10 +46,11 @@ sleep_101 |>
 
 #
 sleep_101 |>
-  filter(date < "2021-05-24 23:03:00 UTC")
+  # filter(date < "2021-05-24 0:00:00 UTC") # lubridate::?
+  # filter(date >= as.Date("2021-05-24"), date <= as.Date("2021-05-25")) |>
   ggplot(aes(x = date, y = sleep_type)) +
   geom_step(aes(group = 1)) +
-  geom_line(aes(x = date, y = sleep_type, colour = sleep_type)) +
+  # geom_line(aes(x = date, y = sleep_type)) + # colour = sleep_type
   labs(title = "Subject 1", x = "Time (POSIXct)", y = "Sleep State") #+
 # theme_clean()
 ```
@@ -70,5 +71,69 @@ add_numbers <- function(num1, num2) {
   return(added)
 }
 
-add_numbers(100,1)
+add_numbers(100, 1)
+```
+
+
+
+## Import CGM data with a function
+```{r}
+#' Title
+#'
+#' @param file_path Path to the file
+#'
+#' @returns A dataframe
+#'
+#' @examples
+#' here::here("data-raw/dime/cgm/101.csv") |>
+#'   import_cgm()
+#'
+import_cgm <- function(file_path) {
+  cgm <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(cgm)
+}
+
+# import_cgm(here::here("data-raw/dime/cgm/101.csv"))
+here::here("data-raw/dime/cgm/101.csv") |>
+  import_cgm()
+
+here::here("data-raw/dime/cgm/102.csv") |>
+  import_cgm()
+```
+
+
+## Import sleep data with a function
+```{r}
+#' Title
+#'
+#' @param file_path Path to the file
+#'
+#' @returns A data frame
+#'
+#' @examples
+#' here::here("data-raw/dime/sleep/101.csv") |>
+#'   import_cgm()
+#'
+import_sleep <- function(file_path) {
+  sleep <- file_path |>
+    # browser()
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = 100
+    )
+  return(sleep)
+}
+
+here::here("data-raw/dime/sleep/101.csv") |>
+  import_sleep()
+```
+
+## Making functions robust
+```{r}
 ```
