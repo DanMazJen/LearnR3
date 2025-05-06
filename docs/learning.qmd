@@ -11,6 +11,7 @@ format: html
 library(tidyverse)
 library(here)
 library(snakecase)
+source(here::here("R/functions.r"))
 ```
 
 ```{r}
@@ -136,4 +137,21 @@ here::here("data-raw/dime/sleep/101.csv") |>
 
 ## Making functions robust
 ```{r}
+```
+
+## Import DIME data function
+```{r}
+here::here("data-raw/dime/sleep/101.csv") |>
+  import_dime()
+```
+
+
+
+## S3 
+```{r}
+num <- 1000000000
+print(num)
+
+class(num) <- c("POSIXct", "POSIXt")
+print(num)
 ```
