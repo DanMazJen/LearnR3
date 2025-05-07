@@ -19,3 +19,24 @@ import_dime <- function(file_path) {
     stop("File is not a CSV file.")
   }
 }
+
+
+#' Title
+#'
+#' @param file_path The path to the data folder
+#'
+#' @returns One tibble with the data and path as ID
+#'
+#' @examples
+#' import_csv_files("data-raw/dime/sleep/")
+#'
+import_csv_files <- function(file_path) {
+  files <- here::here(file_path) |>
+    fs::dir_ls(glob = "*.csv")
+
+  data <- files |>
+    purrr::map(import_dime) |>
+    purrr::list_rbind(names_to = "file_path_id")
+
+  return(data)
+}

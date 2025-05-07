@@ -11,6 +11,7 @@ format: html
 library(tidyverse)
 library(here)
 library(snakecase)
+library(fs)
 source(here::here("R/functions.r"))
 ```
 
@@ -169,4 +170,40 @@ getS3method("print", "numeric_version")
 getS3method("print", "POSIXct")
 getS3method("print", "factor")
 getS3method("print", "data.frame")
+```
+
+# Day 2
+
+## functionals using {purrr}
+```{r}
+# map() outputs a list.
+# map_chr() outputs a character vector.
+# map_int() outputs an integer vector.
+# map_dbl() outputs a numeric value, called a “double” in programming.
+
+map(1:5, ~ paste(.x, "seconds have passed"))
+map(1:5, \(number) paste(number, "seconds have passed"))
+map(1:5, function(number) paste(number, "seconds have passed"))
+```
+
+## Using map
+
+```{r}
+cgm_files <- here::here("data-raw/dime/cgm/") |>
+  fs::dir_ls(glob = "*.csv")
+
+cgm_data <- cgm_files |>
+  map(import_dime) |>
+  purrr::list_rbind(names_to = "file_path_id")
+
+dim(cgm_data)
+
+cgm_data |>
+  dplyr::rename(file_path_id, )
+```
+
+
+## Exercise: Convert map to function and use on sleep.
+```{r}
+import_csv_files("data-raw/dime/sleep/")
 ```
